@@ -1,7 +1,17 @@
+// You'll want to get in the habit of wrapping your code in some kind of
+// function block - this prevents variables from being leaked onto the global
+// scope which can prevent bugs from naming collisions with other code.
+
 //variables
 
-
+// These question options are all in the same structure and they
+// are prime candidates for being moved into an array so you won't
+// need to declare each option separately.
 var optionsOne = {
+        // Since the question property really only seems to refer to the text of the question, I'd
+        // suggest making it just a string value instead of a strign within an array since
+        // the use of an array misleadingly makes it seem as though `question` refers to a list
+        // of questions as opposed to a single question.
 				question: ["Who is known for singing in the highest ocative reachable in the human vocal range?"],
 					a : 'A)  Minnie Riperton',
 					b : 'B)  Nina Simone',
@@ -56,7 +66,23 @@ var optionsSeven = {
 				};
 
 //functions
+// Using `$.each` here suggests that you are going to iterate over a list
+// of jQuery elements and run the function for each of them. This actually
+// ends up iterating over each of the properties in `optionsOne`. While this 
+// works for getting all of the property values appended to the DOM, it's kind of
+// a roundabout way to do so. Since you know all of the proerty values of your
+// options variables, I think it'd be more clear if you accessed each property explicitly
+// like so:
+/*
+  
+  var questionContainer = $('<div>')
+  questionContainer.append( $('<div>').text( optionsOne.question[0] ) )
+  questionContainer.append( $('<div>').text( optionsOne.a ) )
+  questionContainer.append( $('<div>').text( optionsOne.b ) )
+  questionContainer.append( $('<div>').text( optionsOne.c ) )
+  questionContainer.append( $('<div>').text( optionsOne.d ) )
 
+*/
 $.each(optionsOne, function (key, value) { 
   var options = $('<div>');
   options.text(value);
